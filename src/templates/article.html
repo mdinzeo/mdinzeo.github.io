@@ -1,0 +1,29 @@
+<div class="container">
+    <article class="article-detail">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a> / <span>{{PUBLICATION}}</span>
+        </nav>
+
+        <!-- Article Header -->
+        <header class="article-header">
+            <h1 class="article-detail-title">{{TITLE}}</h1>
+            <div class="article-detail-meta">
+                <span class="publication">{{PUBLICATION}}</span>
+                <time datetime="{{DATE_ISO}}">{{DATE_FORMATTED}}</time>
+            </div>
+        </header>
+
+        <!-- Article Preview -->
+        <div class="article-preview">
+            {{PREVIEW}}
+        </div>
+
+        <!-- Link to Original -->
+        <div class="original-link">
+            <a href="{{ORIGINAL_URL}}" class="btn btn-primary" target="_blank" rel="noopener">
+                Read full article at {{PUBLICATION}}
+            </a>
+        </div>
+    </article>
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-title">Maria Dinzeo</h1>
+        <p class="hero-subtitle">Journalist covering cybersecurity, data privacy, and tech policy</p>
+    </section>
+
+    <!-- Featured Articles -->
+    <section class="featured-section" id="featured-section" style="{{FEATURED_DISPLAY}}">
+        <h2 class="section-heading">Featured Articles</h2>
+        <div class="grid grid-auto">
+            {{FEATURED_ARTICLES}}
+        </div>
+    </section>
+
+    <!-- Latest Stories -->
+    <section class="latest-section">
+        <h2 class="section-heading-sm">Latest Stories</h2>
+        <ul class="latest-stories-list">
+            {{LATEST_STORIES}}
+        </ul>
+    </section>
+
+    <!-- Search and Filter -->
+    <section class="archive-section">
+        <div class="archive-header">
+            <h2 class="section-heading">Article Archive</h2>
+
+            <!-- Search -->
+            <div class="search-container">
+                <input
+                    type="search"
+                    id="search-input"
+                    class="search-input"
+                    placeholder="Search articles by keyword..."
+                    aria-label="Search articles"
+                >
+            </div>
+
+            <!-- Filters and Results Count -->
+            <div class="archive-controls">
+                <div class="filters">
+                    <select id="publication-filter" class="filter-select" aria-label="Filter by publication">
+                        <option value="all">All Publications</option>
+                    </select>
+                    <select id="year-filter" class="filter-select" aria-label="Filter by year">
+                        <option value="all">All Years</option>
+                    </select>
+                </div>
+                <div class="results-count" id="results-count">
+                    Showing {{TOTAL_ARTICLES}} articles
+                </div>
+            </div>
+        </div>
+
+        <!-- Article Grid -->
+        <div class="grid grid-auto" id="article-grid">
+            {{ARTICLE_GRID}}
+        </div>
+
+        <!-- Empty State (hidden by default, shown by JS when no results) -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <h3 class="empty-state-title">No articles found</h3>
+            <p class="empty-state-text">Try adjusting your search or filters</p>
+        </div>
+    </section>
+</div>

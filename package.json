@@ -1,0 +1,24 @@
+{
+  "name": "maria-dinzeo-portfolio",
+  "version": "1.0.0",
+  "description": "Maria Dinzeo's journalism portfolio - replacing Authory",
+  "scripts": {
+    "parse": "node build/parse-xml.js",
+    "generate": "node build/generate-site.js",
+    "search-index": "node build/generate-search-index.js",
+    "build": "npm run parse && npm run generate && npm run search-index",
+    "dev": "npm run build && npx http-server docs -p 8000 -o",
+    "deploy": "npm run build && git add docs && git commit -m 'Build site' && git push"
+  },
+  "keywords": ["journalism", "portfolio", "static-site"],
+  "author": "Maria Dinzeo",
+  "license": "MIT",
+  "dependencies": {
+    "lunr": "^2.3.9",
+    "marked": "^12.0.0"
+  },
+  "devDependencies": {
+    "xml2js": "^0.6.2",
+    "http-server": "^14.1.1"
+  }
+}

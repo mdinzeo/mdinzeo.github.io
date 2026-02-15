@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs (docs/ is kept for GitHub Pages)
+# But we'll track it in git
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp files
+*.tmp
+.cache/
+
+# Internal notes
+future-improvements.md
+
+# Old/archived data
+articles/
+index.html
+color-scheme-preview.html
