@@ -8,6 +8,7 @@ const lunr = require('lunr');
 const { readJSON, writeJSON } = require('./utils');
 
 const ARTICLES_JSON = path.join(__dirname, '..', 'docs', 'data', 'articles.json');
+const TAGS_JSON = path.join(__dirname, '..', 'src', 'data', 'article-tags.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'docs', 'assets', 'js', 'search-index.json');
 
 function generateSearchIndex() {
@@ -23,12 +24,18 @@ function generateSearchIndex() {
 
   console.log(`📚 Indexing ${articles.length} articles...`);
 
+  // Load article tags
+  const articleTagsMap = fs.existsSync(TAGS_JSON)
+    ? JSON.parse(fs.readFileSync(TAGS_JSON, 'utf8'))
+    : {};
+
   // Build lunr index
   const index = lunr(function () {
     // Define fields
     this.ref('id');
     this.field('title', { boost: 2 });        // Title is most important
     this.field('description', { boost: 1.5 }); // Description is second
+    this.field('tags', { boost: 1.5 });        // Tags boost topic matches
     this.field('searchText');                  // Full text search
     this.field('publication');
     this.field('year');
@@ -39,6 +46,7 @@ function generateSearchIndex() {
         id: article.id,
         title: article.title,
         description: article.description,
+        tags: (articleTagsMap[article.id] || []).join(' '),
         searchText: article.searchText,
         publication: article.publication,
         year: article.year.toString()
@@ -58,7 +66,8 @@ function generateSearchIndex() {
       publicationSlug: article.publicationSlug,
       excerpt: article.excerpt,
       readMoreUrl: article.readMoreUrl,
-      url: article.url
+      url: article.url,
+      tags: articleTagsMap[article.id] || []
     };
   });
 

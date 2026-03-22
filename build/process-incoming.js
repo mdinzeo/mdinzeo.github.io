@@ -14,9 +14,11 @@ const crypto = require('crypto');
 const pdfParse = require('pdf-parse');
 const Anthropic = require('@anthropic-ai/sdk');
 
-const INCOMING_DIR = path.join(__dirname, '..', 'incoming');
-const ARCHIVE_DIR = path.join(__dirname, '..', 'archive');
-const XML_PATH = path.join(__dirname, '..', 'MariaDinzeo.xml');
+const INCOMING_DIR  = path.join(__dirname, '..', 'incoming');
+const ARCHIVE_DIR   = path.join(__dirname, '..', 'archive');
+const XML_PATH      = path.join(__dirname, '..', 'MariaDinzeo.xml');
+const TAXONOMY_PATH = path.join(__dirname, '..', 'src', 'data', 'suggested-tags.json');
+const TAGS_PATH     = path.join(__dirname, '..', 'src', 'data', 'article-tags.json');
 
 const client = new Anthropic();
 
@@ -109,6 +111,56 @@ function insertArticleIntoXml(xmlContent, articleEntry) {
   return xmlContent.slice(0, openTagEnd) + articleEntry + '\n' + xmlContent.slice(openTagEnd);
 }
 
+// ── Tagging ────────────────────────────────────────────────────────────────────
+
+async function tagArticle(uuid, metadata) {
+  if (!fs.existsSync(TAXONOMY_PATH)) return [];
+
+  const taxonomy = JSON.parse(fs.readFileSync(TAXONOMY_PATH, 'utf8'));
+  const vocabularyString = taxonomy.categories.map(cat => {
+    const note = cat.required ? ' (REQUIRED — assign exactly one)' : '';
+    return `${cat.name}${note}:\n${cat.tags.map(t => `  - ${t}`).join('\n')}`;
+  }).join('\n\n');
+
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 256,
+    messages: [{
+      role: 'user',
+      content: `Tag this article using ONLY tags from the vocabulary below. Return ONLY a JSON array of tag strings, no other text.
+
+Rules:
+- Publication tag is REQUIRED — use the exact publication name
+- Assign 2-6 tags total including publication
+- Only assign tags that clearly apply
+
+Vocabulary:
+${vocabularyString}
+
+Article:
+title: ${metadata.title}
+description: ${metadata.description}
+publication: ${metadata.publication}`
+    }]
+  });
+
+  const text = message.content[0].text.trim();
+  try {
+    return JSON.parse(text);
+  } catch {
+    const match = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    return match ? JSON.parse(match[1]) : [];
+  }
+}
+
+function saveArticleTag(uuid, tags) {
+  const existing = fs.existsSync(TAGS_PATH)
+    ? JSON.parse(fs.readFileSync(TAGS_PATH, 'utf8'))
+    : {};
+  existing[uuid] = tags;
+  fs.writeFileSync(TAGS_PATH, JSON.stringify(existing, null, 2));
+}
+
 // ── Archive ────────────────────────────────────────────────────────────────────
 
 function archivePdf(pdfPath) {
@@ -154,7 +206,14 @@ async function run() {
       console.log(`  URL:         ${metadata.url || '(not found)'}`);
 
       const entry = buildXmlEntry(metadata);
+      const uuid = entry.match(/uuid="([^"]+)"/)[1];
       xmlContent = insertArticleIntoXml(xmlContent, entry);
+
+      const tags = await tagArticle(uuid, metadata);
+      if (tags.length > 0) {
+        saveArticleTag(uuid, tags);
+        console.log(`  Tags:        ${tags.join(', ')}`);
+      }
 
       archivePdf(pdfPath);
       processed++;

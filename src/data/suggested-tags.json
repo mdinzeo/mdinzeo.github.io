@@ -1,0 +1,100 @@
+{
+  "categories": [
+    {
+      "name": "Publication",
+      "description": "Required tag — every article gets exactly one publication tag",
+      "required": true,
+      "tags": [
+        "Courthouse News Service",
+        "Law.com",
+        "MLex",
+        "SF Bay Guardian"
+      ]
+    },
+    {
+      "name": "Topic",
+      "description": "Broad subject areas covered in articles",
+      "tags": [
+        "Privacy",
+        "Data Breach",
+        "Social Media Harms",
+        "Cybersecurity",
+        "Consumer Protection",
+        "Antitrust",
+        "Free Speech",
+        "Government Surveillance",
+        "Employment Law",
+        "Environmental Law",
+        "Immigration",
+        "Criminal Justice",
+        "Education Law",
+        "Intellectual Property",
+        "Financial Fraud",
+        "Tax Law",
+        "Healthcare Law",
+        "Artificial Intelligence"
+      ]
+    },
+    {
+      "name": "Law & Regulation",
+      "description": "Specific laws, regulations, and legal frameworks",
+      "tags": [
+        "CFAA",
+        "GDPR",
+        "Section 230",
+        "BIPA",
+        "FOIA",
+        "Americans with Disabilities Act",
+        "FCPA",
+        "Sherman Act",
+        "Fair Housing Act",
+        "Title VII",
+        "COPPA",
+        "FTC Act",
+        "DMCA",
+        "CCPA (California Consumer Privacy Act)",
+        "Age-Appropriate Design Code",
+        "Data Minimization Laws",
+        "State Privacy Laws",
+        "Online Safety Laws",
+        "CCMS (CaliforniaCourt Case Management System)",
+        "Judicial Council (California)"
+      ]
+    },
+    {
+      "name": "Notable Cases",
+      "description": "Recurring named cases worth tagging",
+      "tags": [
+        "Epic Games v. Apple",
+        "Roundup litigation",
+        "Uber v. drivers",
+        "Facebook privacy cases",
+        "Google antitrust cases",
+        "Meta v. state AGs",
+        "Proposition 8",
+        "NCAA cases",
+        "Twitter v. Musk",
+        "Autonomy v. HP",
+        "Planned Parenthood v. Daleiden"
+      ]
+    },
+    {
+      "name": "Key Figures",
+      "description": "Individuals who are recurring subjects of coverage",
+      "tags": [
+        "Elon Musk",
+        "Mark Zuckerberg",
+        "Lina Khan (FTC Chair)",
+        "California Attorney General",
+        "California Chief Justice",
+        "Luke Brugnara",
+        "Raymond Chow (Shrimp Boy)",
+        "Meta",
+        "Google",
+        "TikTok",
+        "Apple"
+      ]
+    }
+  ],
+  "notes": "This corpus appears to be a comprehensive archive of federal and state litigation coverage focused on the Northern District of California from approximately 2015-2025. The articles heavily emphasize privacy litigation, tech industry disputes, antitrust enforcement, and social media regulation. Several major cases (Roundup, Epic v. Apple, Uber misclassification) recur frequently enough to warrant dedicated tags. The vocabulary prioritizes emerging legal issues like data minimization, age-appropriate design, and algorithmic harms. Named individuals appear infrequently as central figures; instead, the coverage focuses on institutional actors (companies, agencies, courts). Tags for state-by-state privacy laws were consolidated into 'State Privacy Laws' to avoid excessive granularity."
+}

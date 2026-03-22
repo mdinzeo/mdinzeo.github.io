@@ -11,6 +11,7 @@
   let emptyState;
   let resultsCount;
   let searchInput;
+  let activeTagFilter = null;
 
   // Initialize filters
   function initFilters() {
@@ -47,6 +48,30 @@
     if (yearFilter) {
       yearFilter.addEventListener('change', handleFilter);
     }
+
+    // Tag pill click filtering (event delegation on the whole page)
+    document.addEventListener('click', function(e) {
+      const tag = e.target.closest('.article-tag');
+      if (!tag) return;
+
+      e.preventDefault();
+      const clickedTag = tag.dataset.tag;
+      if (!clickedTag) return;
+
+      // Toggle: clicking active tag clears it
+      if (activeTagFilter === clickedTag) {
+        activeTagFilter = null;
+        document.querySelectorAll('.article-tag.active').forEach(t => t.classList.remove('active'));
+      } else {
+        activeTagFilter = clickedTag;
+        document.querySelectorAll('.article-tag.active').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll(`.article-tag[data-tag="${CSS.escape(clickedTag)}"]`).forEach(t => t.classList.add('active'));
+      }
+
+      // Clear any active search, then apply tag filter
+      if (searchInput) searchInput.value = '';
+      handleFilter();
+    });
 
     console.log('Filters initialized');
   }
@@ -139,11 +164,13 @@
     cards.forEach(card => {
       const cardPublication = card.dataset.publication;
       const cardYear = card.dataset.year;
+      const cardTags = card.dataset.tags ? card.dataset.tags.split(',') : [];
 
       const matchesPublication = publication === 'all' || cardPublication === publication;
       const matchesYear = year === 'all' || cardYear === year;
+      const matchesTag = !activeTagFilter || cardTags.includes(activeTagFilter);
 
-      if (matchesPublication && matchesYear) {
+      if (matchesPublication && matchesYear && matchesTag) {
         card.style.display = 'flex';
         visibleCount++;
       } else {

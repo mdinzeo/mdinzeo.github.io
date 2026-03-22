@@ -729,6 +729,43 @@ body {
   }
 }
 
+/* Article Tags */
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.article-tags-detail {
+  margin-bottom: var(--space-xl);
+}
+
+.article-tag {
+  display: inline-block;
+  padding: 2px var(--space-sm);
+  background: var(--color-hover);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition);
+  user-select: none;
+}
+
+.article-tag:hover {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+.article-tag.active {
+  background: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+  color: white;
+}
+
 /* Link with icon */
 .link-external {
   display: inline-flex;

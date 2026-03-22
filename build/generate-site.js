@@ -17,6 +17,7 @@ const {
 // Paths
 const ARTICLES_JSON = path.join(__dirname, '..', 'docs', 'data', 'articles.json');
 const FEATURED_JSON = path.join(__dirname, '..', 'src', 'data', 'featured.json');
+const TAGS_JSON = path.join(__dirname, '..', 'src', 'data', 'article-tags.json');
 const TEMPLATES_DIR = path.join(__dirname, '..', 'src', 'templates');
 const CONTENT_DIR = path.join(__dirname, '..', 'src', 'content');
 const STYLES_DIR = path.join(__dirname, '..', 'src', 'styles');
@@ -133,7 +134,7 @@ function renderBase(content, title, description, activeNav = '', scripts = '') {
 }
 
 // Generate article card HTML
-function generateArticleCard(article, isFeatured = false) {
+function generateArticleCard(article, isFeatured = false, tags = []) {
   const cardClass = isFeatured ? 'article-card featured-card' : 'article-card';
   const featuredBadge = isFeatured ? '<span class="featured-badge">Featured</span>' : '';
 
@@ -142,8 +143,16 @@ function generateArticleCard(article, isFeatured = false) {
     ? `<a href="${publicationUrl}" target="_blank" rel="noopener" class="publication-link">${escapeHtml(article.publication)}</a>`
     : escapeHtml(article.publication);
 
+  // Show topic tags (skip publication tag — already shown in header), max 4
+  const topicTags = tags.filter(t => t !== article.publication).slice(0, 4);
+  const tagsHtml = topicTags.length > 0
+    ? `<div class="article-tags">${topicTags.map(t => `<span class="article-tag" data-tag="${escapeHtml(t)}" title="Filter by: ${escapeHtml(t)}">${escapeHtml(t)}</span>`).join('')}</div>`
+    : '';
+
+  const tagsAttr = tags.length > 0 ? ` data-tags="${escapeHtml(tags.join(','))}"` : '';
+
   return `
-    <article class="${cardClass}" data-publication="${article.publicationSlug}" data-year="${article.year}">
+    <article class="${cardClass}" data-id="${article.id}"${tagsAttr} data-publication="${article.publicationSlug}" data-year="${article.year}">
       ${featuredBadge}
       <div class="article-meta">
         <span class="publication">${publicationHtml}</span>
@@ -153,6 +162,7 @@ function generateArticleCard(article, isFeatured = false) {
         <a href="${article.readMoreUrl}">${escapeHtml(article.title)}</a>
       </h2>
       <p class="article-description">${escapeHtml(article.description || article.excerpt)}</p>
+      ${tagsHtml}
       <a href="${article.readMoreUrl}" class="read-more">Read preview</a>
     </article>
   `;
@@ -183,7 +193,7 @@ function generateLatestStoryItem(article) {
 }
 
 // Generate homepage
-function generateHomepage(articles) {
+function generateHomepage(articles, articleTags) {
   console.log('🏠 Generating homepage...');
 
   const template = loadTemplate('home');
@@ -210,11 +220,11 @@ function generateHomepage(articles) {
 
   // Render components
   const featuredHTML = featuredArticles.length > 0
-    ? featuredArticles.map(a => generateArticleCard(a, true)).join('\n')
+    ? featuredArticles.map(a => generateArticleCard(a, true, articleTags[a.id] || [])).join('\n')
     : '';
 
   const latestHTML = latestArticles.map(a => generateLatestStoryItem(a)).join('\n');
-  const gridHTML = gridArticles.map(a => generateArticleCard(a, false)).join('\n');
+  const gridHTML = gridArticles.map(a => generateArticleCard(a, false, articleTags[a.id] || [])).join('\n');
 
   // Fill template
   let content = template
@@ -248,15 +258,22 @@ function generateHomepage(articles) {
 }
 
 // Generate individual article pages
-function generateArticlePages(articles) {
+function generateArticlePages(articles, articleTags) {
   console.log('📄 Generating article pages...');
 
   const template = loadTemplate('article');
 
   articles.forEach((article, index) => {
-    // Create article directory
-    const articleDir = path.join(OUTPUT_DIR, 'articles', article.id);
+    // Create article directory using title slug (matches readMoreUrl)
+    const articleDir = path.join(OUTPUT_DIR, 'articles', article.slug);
     ensureDir(articleDir);
+
+    // Render tag pills for article page (all topic tags, no limit)
+    const tags = articleTags[article.id] || [];
+    const topicTags = tags.filter(t => t !== article.publication);
+    const tagsHtml = topicTags.length > 0
+      ? `<div class="article-tags article-tags-detail">${topicTags.map(t => `<span class="article-tag" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</span>`).join('')}</div>`
+      : '';
 
     // Fill template
     const content = template
@@ -264,6 +281,7 @@ function generateArticlePages(articles) {
       .replace(/{{PUBLICATION}}/g, escapeHtml(article.publication))
       .replace(/{{DATE_ISO}}/g, article.date)
       .replace(/{{DATE_FORMATTED}}/g, formatDate(article.date))
+      .replace(/{{TAGS}}/g, tagsHtml)
       .replace(/{{PREVIEW}}/g, article.preview)
       .replace(/{{ORIGINAL_URL}}/g, article.url);
 
@@ -364,6 +382,12 @@ async function generateSite() {
 
   console.log(`✅ Loaded ${articles.length} articles\n`);
 
+  // Load article tags
+  const articleTags = fs.existsSync(TAGS_JSON)
+    ? JSON.parse(fs.readFileSync(TAGS_JSON, 'utf8'))
+    : {};
+  console.log(`🏷️  Loaded tags for ${Object.keys(articleTags).length} articles\n`);
+
   // Combine CSS
   combineCSS();
   console.log();
@@ -377,8 +401,8 @@ async function generateSite() {
   console.log();
 
   // Generate pages
-  generateHomepage(articles);
-  generateArticlePages(articles);
+  generateHomepage(articles, articleTags);
+  generateArticlePages(articles, articleTags);
   generateAboutPage();
   generateContactPage();
 

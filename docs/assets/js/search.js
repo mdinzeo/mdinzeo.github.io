@@ -40,28 +40,38 @@
     }
   }
 
+  // Escape lunr special characters (parens, colons, wildcards, etc.)
+  function escapeLunr(str) {
+    return str.replace(/[+\-^~*?:\/\\(){}\[\]!]/g, '\\$&');
+  }
+
   // Perform search
   function performSearch(query) {
     if (!query || query.trim().length === 0) {
       return null;
     }
 
+    let rawResults;
     try {
-      // Search with lunr
-      const results = searchIndex.search(query);
-
-      // Map results to article data
-      return results.map(result => {
-        const article = articles[result.ref];
-        return {
-          ...article,
-          score: result.score
-        };
-      });
+      rawResults = searchIndex.search(escapeLunr(query));
     } catch (error) {
       console.error('Search error:', error);
       return [];
     }
+
+    if (rawResults.length === 0) return [];
+
+    // Filter out weak matches: only keep results scoring >= 15% of the top score.
+    // This removes articles that tangentially mention a search term alongside more
+    // relevant matches.
+    const topScore = rawResults[0].score;
+    const threshold = topScore * 0.15;
+    const filtered = rawResults.filter(r => r.score >= threshold);
+
+    return filtered.map(result => {
+      const article = articles[result.ref];
+      return { ...article, score: result.score };
+    });
   }
 
   // Handle search input
@@ -113,14 +123,9 @@
     // Show/hide cards based on results
     let visibleCount = 0;
     cards.forEach(card => {
-      // Get article ID from the card's link
-      const link = card.querySelector('.article-title a');
-      if (!link) return;
+      const articleId = card.dataset.id;
 
-      const href = link.getAttribute('href');
-      const articleId = href.split('/').filter(Boolean)[1]; // Extract ID from /articles/{id}/
-
-      if (resultIds.has(articleId)) {
+      if (articleId && resultIds.has(articleId)) {
         card.style.display = 'flex';
         visibleCount++;
       } else {
@@ -148,7 +153,7 @@
     const selectedPublication = publicationFilter ? publicationFilter.value : 'all';
     const selectedYear = yearFilter ? yearFilter.value : 'all';
 
-    // Show all cards that match filters
+    // Show all cards that match filters (tag filter handled by filter.js)
     cards.forEach(card => {
       const publication = card.dataset.publication;
       const year = card.dataset.year;

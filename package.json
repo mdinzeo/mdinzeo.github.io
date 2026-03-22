@@ -10,19 +10,26 @@
     "dev": "npm run build && npx http-server docs -p 8000 -o",
     "deploy": "npm run build && git add docs && git commit -m 'Build site' && git push",
     "process-incoming": "node build/process-incoming.js",
-    "migrate-uuid": "node build/migrate-add-uuid.js"
+    "migrate-uuid": "node build/migrate-add-uuid.js",
+    "suggest-tags": "node build/suggest-tags.js",
+    "tag-articles": "node build/tag-articles.js"
   },
-  "keywords": ["journalism", "portfolio", "static-site"],
+  "keywords": [
+    "journalism",
+    "portfolio",
+    "static-site"
+  ],
   "author": "Maria Dinzeo",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^17.3.1",
     "lunr": "^2.3.9",
     "marked": "^12.0.0"
   },
   "devDependencies": {
-    "xml2js": "^0.6.2",
+    "@anthropic-ai/sdk": "^0.39.0",
     "http-server": "^14.1.1",
     "pdf-parse": "^1.1.1",
-    "@anthropic-ai/sdk": "^0.39.0"
+    "xml2js": "^0.6.2"
   }
 }
