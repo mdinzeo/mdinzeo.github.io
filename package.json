@@ -8,7 +8,9 @@
     "search-index": "node build/generate-search-index.js",
     "build": "npm run parse && npm run generate && npm run search-index",
     "dev": "npm run build && npx http-server docs -p 8000 -o",
-    "deploy": "npm run build && git add docs && git commit -m 'Build site' && git push"
+    "deploy": "npm run build && git add docs && git commit -m 'Build site' && git push",
+    "process-incoming": "node build/process-incoming.js",
+    "migrate-uuid": "node build/migrate-add-uuid.js"
   },
   "keywords": ["journalism", "portfolio", "static-site"],
   "author": "Maria Dinzeo",
@@ -19,6 +21,8 @@
   },
   "devDependencies": {
     "xml2js": "^0.6.2",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "pdf-parse": "^1.1.1",
+    "@anthropic-ai/sdk": "^0.39.0"
   }
 }

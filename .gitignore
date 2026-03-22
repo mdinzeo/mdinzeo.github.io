@@ -23,6 +23,13 @@ npm-debug.log*
 *.tmp
 .cache/
 
+# Migration backup
+*.bak
+
+# PDFs in archive/ are large — don't commit them
+archive/**/*.pdf
+archive/**/*.PDF
+
 # Internal notes
 future-improvements.md
 

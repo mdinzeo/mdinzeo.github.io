@@ -1,0 +1,39 @@
+name: Process New Articles
+
+on:
+  push:
+    paths:
+      - 'incoming/*.pdf'
+      - 'incoming/*.PDF'
+
+jobs:
+  process-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Process incoming PDFs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node build/process-incoming.js
+
+      - name: Build site
+        run: npm run build
+
+      - name: Commit and push
+        run: |
+          git config user.name "Maria Dinzeo Bot"
+          git config user.email "noreply@github.com"
+          git add .
+          git diff --staged --quiet || git commit -m "Auto-add articles from incoming/"
+          git push

@@ -37,7 +37,8 @@ async function parseXML() {
   const processedArticles = articles.map((article, index) => {
     // Extract data from XML structure
     const url = article.$.url || '';
-    const id = article.$.slug || `article-${index}`;
+    const id = article.$.uuid || article.$.slug || `article-${index}`;
+    const authoryId = article.$.authory_id || article.$.slug || '';
     const dateStr = article.$.date || '';
     let title = article.title?.[0] || 'Untitled';
     const description = article.description?.[0] || '';
@@ -79,6 +80,7 @@ async function parseXML() {
 
     return {
       id,
+      authoryId,
       slug: titleSlug,
       title,
       date: dateFormatted,
@@ -90,7 +92,7 @@ async function parseXML() {
       preview,
       excerpt,
       searchText,
-      readMoreUrl: `/articles/${id}/`
+      readMoreUrl: `/articles/${titleSlug}/`
     };
   });
 
