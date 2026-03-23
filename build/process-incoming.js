@@ -62,7 +62,13 @@ ${pdfText.substring(0, 8000)}`
   });
 
   const text = message.content[0].text.trim();
-  return JSON.parse(text);
+  try {
+    return JSON.parse(text);
+  } catch {
+    const match = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if (match) return JSON.parse(match[1]);
+    throw new Error('Could not parse Claude response as JSON:\n' + text.substring(0, 200));
+  }
 }
 
 // ── XML helpers ────────────────────────────────────────────────────────────────
