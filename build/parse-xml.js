@@ -76,7 +76,7 @@ async function parseXML() {
     const excerpt = createExcerpt(description || text, 200);
 
     // Combine text for search indexing
-    const searchText = `${title} ${description} ${text}`.substring(0, 5000);
+    const searchText = `${title} ${description} ${text}`.substring(0, 1000);
 
     return {
       id,
