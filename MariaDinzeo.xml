@@ -7,6 +7,18 @@ useremail="mariadinzeo@gmail.com"
 profileUrl="undefined/MariaDinzeo"
 >
     <article
+        url=""
+        authory_id=""
+        uuid="1bcc64af-f38e-42e1-b566-16713337ab6a"
+        date="2026-04-10T00:00:00+00:00"
+        source=""
+    >
+        <title>US lawsuits expose how trust-based sharing of health data heightens privacy risks</title>
+        <description>Lawsuits against healthcare entities and intermediaries reveal significant privacy vulnerabilities in US health data exchange frameworks like Carequality and TEFCA. The cases highlight how trust-based access systems lack adequate verification mechanisms, allowing bad actors to exploit patient records for purposes beyond treatment, such as litigation solicitation.</description>
+        <text>Lawsuits over the alleged misuse of patient records are spotlighting privacy gaps in the trust-based systems underpinning US health data exchanges. Telehealth company GuardDog recently made the unusual confession that it had spent much of its two-year existence accessing sensitive heath data under false pretenses. In a court filing, GuardDog said it had infiltrated national health record exchange called Carequality not for the purpose of providing patient treatment, but to gather data to information to law firms hunting for mass-tort clients. The admission was the latest twist in a lawsuit brought by several hospitals and Epic Systems, one of the largest electronic health record software companies in the United States, against more than a dozen healthcare entities accused of committing &quot;clinical camouflage&quot;— exploiting their access to two health information exchanges to extract valuable patient data.</text>
+        <html>&lt;p&gt;Lawsuits over the alleged misuse of patient records are spotlighting privacy gaps in the trust-based systems underpinning US health data exchanges. Telehealth company GuardDog recently made the unusual confession that it had spent much of its two-year existence accessing sensitive heath data under false pretenses.&lt;/p&gt;&lt;p&gt;In a court filing, GuardDog said it had infiltrated national health record exchange called Carequality not for the purpose of providing patient treatment, but to gather data to information to law firms hunting for mass-tort clients. The admission was the latest twist in a lawsuit brought by several hospitals and Epic Systems, one of the largest electronic health record software companies in the United States, against more than a dozen healthcare entities accused of committing &quot;clinical camouflage&quot;— exploiting their access to two health information exchanges to extract valuable patient data.&lt;/p&gt;</html>
+    </article>
+    <article
         url="https://www.mlex.com"
         authory_id=""
         uuid="602721d5-4fa7-42e0-8f1e-749486352d4c"
