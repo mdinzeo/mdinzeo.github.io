@@ -1,5 +1,37 @@
 [
   {
+    "id": "e59a98cb-9d04-42cc-bc06-29e83cc62bdf",
+    "authoryId": "",
+    "slug": "google-introduces-new-ad-setting-as-audit-flags-opt-out-gaps",
+    "title": "Google introduces new ad setting as audit flags opt-out gaps",
+    "date": "2026-04-27",
+    "year": 2026,
+    "publication": "",
+    "publicationSlug": "",
+    "url": "",
+    "description": "Google has introduced a new ad setting allowing users to limit data sharing with advertising partners across third-party websites and apps, following an independent audit that found major ad tech companies are not honoring browser-based opt-out signals like Global Privacy Control. The webXray audit revealed Google failed to honor opt-out choices in 87 percent of cases, with Meta at 69 percent and Microsoft at 50 percent, prompting increased scrutiny from California regulators.",
+    "preview": "<p>Google has introduced a new setting allowing users to limit how their data is shared with advertising partners across third-party websites and apps, after a recent audit raised questions about whether major ad tech companies are honoring browser-based opt-out signals.</p>\n<p>Google on Friday notified its users, via an early morning email, of a new setting allowing them to opt out of personalized ads on partner sites and apps, a change the company said is designed to give people more control over how their data is shared with advertising partners across the web.</p>",
+    "excerpt": "Google has introduced a new ad setting allowing users to limit data sharing with advertising partners across third-party websites and apps, following an independent audit that found major ad tech...",
+    "searchText": "Google introduces new ad setting as audit flags opt-out gaps Google has introduced a new ad setting allowing users to limit data sharing with advertising partners across third-party websites and apps, following an independent audit that found major ad tech companies are not honoring browser-based opt-out signals like Global Privacy Control. The webXray audit revealed Google failed to honor opt-out choices in 87 percent of cases, with Meta at 69 percent and Microsoft at 50 percent, prompting increased scrutiny from California regulators. Google has introduced a new setting allowing users to limit how their data is shared with advertising partners across third-party websites and apps, after a recent audit raised questions about whether major ad tech companies are honoring browser-based opt-out signals. Google on Friday notified its users, via an early morning email, of a new setting allowing them to opt out of personalized ads on partner sites and apps, a change the company said is desig",
+    "readMoreUrl": "/articles/google-introduces-new-ad-setting-as-audit-flags-opt-out-gaps/"
+  },
+  {
+    "id": "7743e125-1096-4e3a-943b-f4c90f64b883",
+    "authoryId": "",
+    "slug": "google-meta-microsoft-systems-fail-to-honor-opt-out-signals-audit-says",
+    "title": "Google, Meta, Microsoft systems fail to honor opt-out signals, audit says",
+    "date": "2026-04-14",
+    "year": 2026,
+    "publication": "",
+    "publicationSlug": "",
+    "url": "",
+    "description": "An independent audit by webXray found that Google, Meta, and Microsoft are largely ignoring consumer opt-out requests via Global Privacy Control, with Google showing an 87% failure rate, Meta at 69%, and Microsoft at 50%. The audit identified over 124,000 advertising cookies set despite users enabling privacy controls, exposing the companies to potential $5.8 billion in liability.",
+    "preview": "<p>Digital advertising giants Google, Microsoft and Meta are largely ignoring consumer requests to opt out of tracking, according to an independent audit that found more than 124,000 advertising cookies were set despite users having enabled Global Privacy Control.</p>\n<p>The findings come from webXray, a privacy analytics platform founded by Timothy Libert, a former Google engineer who oversaw its cookie policy and compliance.</p>",
+    "excerpt": "An independent audit by webXray found that Google, Meta, and Microsoft are largely ignoring consumer opt-out requests via Global Privacy Control, with Google showing an 87% failure rate, Meta at 69%,...",
+    "searchText": "Google, Meta, Microsoft systems fail to honor opt-out signals, audit says An independent audit by webXray found that Google, Meta, and Microsoft are largely ignoring consumer opt-out requests via Global Privacy Control, with Google showing an 87% failure rate, Meta at 69%, and Microsoft at 50%. The audit identified over 124,000 advertising cookies set despite users enabling privacy controls, exposing the companies to potential $5.8 billion in liability. Digital advertising giants Google, Microsoft and Meta are largely ignoring consumer requests to opt out of tracking, according to an independent audit that found more than 124,000 advertising cookies were set despite users having enabled Global Privacy Control. The findings come from webXray, a privacy analytics platform founded by Timothy Libert, a former Google engineer who oversaw its cookie policy and compliance. WebXray scanned 7,587 websites popular in California, testing each with and without Global Privacy Control enabled to mea",
+    "readMoreUrl": "/articles/google-meta-microsoft-systems-fail-to-honor-opt-out-signals-audit-says/"
+  },
+  {
     "id": "1bcc64af-f38e-42e1-b566-16713337ab6a",
     "authoryId": "",
     "slug": "us-lawsuits-expose-how-trust-based-sharing-of-health-data-heightens-privacy-risks",
